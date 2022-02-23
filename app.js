@@ -59,10 +59,11 @@ class GalleryImage extends HTMLElement {
 
     connectedCallback() {
         this.shadow.innerHTML = this.render()
-        let open = this.shadow.querySelector('#popup-open')
-        open.addEventListener('click', this.togglePopUp.bind(this))
-        let close = this.shadow.querySelector('#popup')
-        close.addEventListener('click', this.togglePopUp.bind(this))
+        let open = this.shadowRoot.querySelector('#popup-open')
+        let close = this.shadowRoot.querySelector('#popup')
+        const type = ( window.ontouchstart === null ) ? 'touchstart' : 'click';
+        open.addEventListener(type, this.togglePopUp.bind(this), true)
+        close.addEventListener(type, this.togglePopUp.bind(this), true)
     }
 
     render() {
@@ -81,6 +82,11 @@ class GalleryImage extends HTMLElement {
     align-items: center;
     display: none;
     z-index: 9999;
+    touch-action: none;
+}
+
+#popup-open {
+    touch-action: none;
 }
 
 .center {
@@ -99,16 +105,17 @@ class GalleryImage extends HTMLElement {
 .inner-popup {
     max-width: 600px;
     max-height: 600px;
-    width: 100%;
-    height: auto;
     margin: 0 32px;
     position: relative;
+    text-align: center;
 }
 
 #popup-image {
-    width: 100%;
+    width: auto;
     height: auto;
     border-radius: 15px;
+    max-height: 90vh;
+    max-width: 90vw;
 }
 
 .gallery-img {
@@ -126,8 +133,8 @@ class GalleryImage extends HTMLElement {
     }
 }
 </style>
-<div class="gallery-img-box"><img id="popup-open" class="gallery-img" src="${this.thumbnail}" alt="${this.title}"></div>
-<div id="popup"><div class="inner-popup"><h1 id="popup-title" class="center"></h1><img src="${this.src}" alt="${this.title}" id="popup-image"></div></div>
+<div id="popup-open" class="gallery-img-box"><img class="gallery-img" src="${this.thumbnail}" alt="${this.title}"></div>
+<div id="popup" ><div class="inner-popup"><h1 id="popup-title" class="center">${this.title}</h1><img src="${this.src}" alt="${this.title}" id="popup-image"></div></div>
 `
     }
 }
