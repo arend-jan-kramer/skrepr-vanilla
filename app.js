@@ -1,10 +1,3 @@
-const template = document.createElement('template');
-template.innerHTML = `
-
-
-<div id="popup"><div class="inner-popup"><h1 id="popup-title" class="center"></h1><img src="" alt="" id="popup-image"></div></div>
-`;
-
 class GalleryImage extends HTMLElement {
     constructor() {
         super()
